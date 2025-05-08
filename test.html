@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Classification Endpoint</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Classification Endpoint</h1>
+    <form id="uploadForm">
+        <div class="form-group">
+            <label for="image">Select Image:</label>
+            <input type="file" id="image" name="file" accept="image/*" required>
+        </div>
+        <button type="submit">Classify Image</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const fileInput = document.getElementById('image');
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                const response = await fetch('/classify', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing the image.');
+            }
+        });
+    </script>
+</body>
+</html> 

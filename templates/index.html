@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Анализ спутниковых изображений — Главная</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2C5530;
+            --secondary-color: #4A7856;
+            --accent-color: #8BA888;
+            --background-color: #F5F7F5;
+            --text-color: #2C3E2C;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2.5rem 0 1.5rem 0;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.7rem;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 1rem 0 0 0;
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+        .nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 2.5rem 2rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .feature-card {
+            background: var(--background-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            text-align: center;
+        }
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.7rem;
+        }
+        .feature-card p {
+            margin: 0;
+            color: var(--text-color);
+            opacity: 0.85;
+        }
+        .cta {
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+        .cta a {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .cta a:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Анализ изменений по спутниковым снимкам</h1>
+        <p>Современный сервис для автоматического обнаружения и классификации изменений на спутниковых изображениях.</p>
+    </div>
+    <div class="nav">
+        <div class="nav-content">
+            <a href="/">Главная</a>
+            <a href="/classify">Классификация</a>
+            <a href="/change-detection">Обнаружение изменений</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h2>О сервисе</h2>
+        <p>Этот сервис позволяет анализировать спутниковые снимки для выявления изменений на местности и автоматической классификации объектов. Используйте его для мониторинга урбанизации, оценки последствий природных катастроф, контроля за состоянием окружающей среды и других задач.</p>
+        <div class="features">
+            <div class="feature-card">
+                <h3>Обнаружение изменений</h3>
+                <p>Загрузите два снимка &mdash; до и после. Система выделит области, где произошли изменения.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Классификация объектов</h3>
+                <p>Определение типа объектов на снимке: город, лес, вода, сельское хозяйство и др.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Высокая точность</h3>
+                <p>Используются современные нейросетевые и классические методы анализа изображений.</p>
+            </div>
+        </div>
+        <div class="cta">
+            <a href="/change-detection">Начать анализ изменений</a>
+        </div>
+    </div>
+</body>
+</html> 

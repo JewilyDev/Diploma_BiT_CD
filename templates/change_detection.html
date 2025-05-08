@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Satellite Change Detection - Environmental Impact Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2C5530;
+            --secondary-color: #4A7856;
+            --accent-color: #8BA888;
+            --background-color: #F5F7F5;
+            --text-color: #2C3E2C;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --error-color: #F44336;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
+            z-index: 1;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header p {
+            margin: 1rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .upload-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .upload-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .image-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .image-upload h3 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .file-input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 1.5rem;
+            border: 2px dashed var(--accent-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .file-input:hover {
+            border-color: var(--primary-color);
+            background-color: var(--background-color);
+        }
+
+        .preview-section {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-image:hover {
+            transform: scale(1.02);
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            grid-column: 1 / -1;
+            justify-self: center;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .submit-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .result-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-card h3 {
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+        }
+
+        .change-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-item h4 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .stat-item p {
+            margin: 0.5rem 0 0;
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .threshold-analysis {
+            margin-top: 2rem;
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .threshold-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .threshold-table th,
+        .threshold-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .threshold-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        .threshold-table tr:hover {
+            background-color: var(--background-color);
+        }
+
+        .classification-results {
+            margin-top: 2rem;
+        }
+
+        .classification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .classification-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .classification-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .classification-card h4 {
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .probability-bar {
+            background-color: var(--accent-color);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            transition: width 1s ease;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            background-color: #ffebee;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .loading::after {
+            content: "Analyzing changes...";
+            color: var(--primary-color);
+            font-weight: 500;
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: "Analyzing changes"; }
+            40% { content: "Analyzing changes."; }
+            60% { content: "Analyzing changes.."; }
+            80% { content: "Analyzing changes..."; }
+        }
+
+        .change-visualization {
+            margin-top: 2rem;
+            text-align: center;
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .change-visualization img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .change-visualization img:hover {
+            transform: scale(1.02);
+        }
+
+        .impact-statement {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Satellite Change Detection</h1>
+        <p>Analyzing environmental changes through advanced satellite imagery</p>
+    </div>
+
+    <div class="nav">
+        <div class="nav-content">
+            <a href="/">Home</a>
+            <a href="/classify">Classification</a>
+            <a href="/change-detection">Change Detection</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="upload-section">
+            <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+                <div class="image-upload">
+                    <h3>Before Image</h3>
+                    <div class="file-input-container">
+                        <input type="file" id="before" name="before" accept="image/*" class="file-input" required>
+                    </div>
+                    <div class="preview-section">
+                        <img id="beforePreview" class="preview-image" style="display: none;">
+                    </div>
+                </div>
+                <div class="image-upload">
+                    <h3>After Image</h3>
+                    <div class="file-input-container">
+                        <input type="file" id="after" name="after" accept="image/*" class="file-input" required>
+                    </div>
+                    <div class="preview-section">
+                        <img id="afterPreview" class="preview-image" style="display: none;">
+                    </div>
+                </div>
+                <button type="submit" class="submit-button">Detect Changes</button>
+            </form>
+        </div>
+
+        <div class="loading" id="loading"></div>
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        function setupImagePreview(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            
+            input.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const beforeInput = document.getElementById('before');
+            const afterInput = document.getElementById('after');
+            
+            if (!beforeInput.files[0] || !afterInput.files[0]) {
+                alert('Please select both before and after images');
+                return;
+            }
+            
+            formData.append('before', beforeInput.files[0]);
+            formData.append('after', afterInput.files[0]);
+            
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                const response = await fetch('/detect-change', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        <h2>Change Detection Results</h2>
+                        <div class="impact-statement">
+                            Detected ${data.change_percentage.toFixed(2)}% change in the environment
+                        </div>
+                        <div class="change-stats">
+                            <div class="stat-item">
+                                <h4>${data.change_percentage.toFixed(2)}%</h4>
+                                <p>Change Detected</p>
+                            </div>
+                            <div class="stat-item">
+                                <h4>${data.change_stats.changed_pixels.toLocaleString()}</h4>
+                                <p>Changed Pixels</p>
+                            </div>
+                            <div class="stat-item">
+                                <h4>${data.change_stats.total_pixels.toLocaleString()}</h4>
+                                <p>Total Pixels</p>
+                            </div>
+                        </div>
+
+                        <div class="threshold-analysis">
+                            <h3>Threshold Analysis</h3>
+                            <table class="threshold-table">
+                                <thead>
+                                    <tr>
+                                        <th>Threshold</th>
+                                        <th>Change Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${Object.entries(data.threshold_results).map(([threshold, percentage]) => `
+                                        <tr>
+                                            <td>${threshold.replace('threshold_', '')}</td>
+                                            <td>${percentage.toFixed(2)}%</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="classification-results">
+                            <h3>Classification Results</h3>
+                            <div class="classification-grid">
+                                <div class="classification-card">
+                                    <h4>Before Classification</h4>
+                                    <p>Class: ${data.classification.before.predicted === undefined || data.classification.before.predicted === 'No significant change' ? 'No significant change detected' : data.classification.before.predicted}</p>
+                                    <p>Confidence: ${(() => {
+                                        if (!data.classification.before.probabilities) return 'N/A';
+                                        const maxProb = Math.max(...Object.values(data.classification.before.probabilities));
+                                        return isNaN(maxProb) || maxProb === 0 ? 'N/A' : (maxProb * 100).toFixed(2) + '%';
+                                    })()}</p>
+                                    <div class="probability-bar" style="width: ${(() => {
+                                        if (!data.classification.before.probabilities) return 0;
+                                        const maxProb = Math.max(...Object.values(data.classification.before.probabilities));
+                                        return isNaN(maxProb) ? 0 : maxProb * 100;
+                                    })()}%"></div>
+                                </div>
+                                <div class="classification-card">
+                                    <h4>After Classification</h4>
+                                    <p>Class: ${data.classification.after.predicted === undefined || data.classification.after.predicted === 'No significant change' ? 'No significant change detected' : data.classification.after.predicted}</p>
+                                    <p>Confidence: ${(() => {
+                                        if (!data.classification.after.probabilities) return 'N/A';
+                                        const maxProb = Math.max(...Object.values(data.classification.after.probabilities));
+                                        return isNaN(maxProb) || maxProb === 0 ? 'N/A' : (maxProb * 100).toFixed(2) + '%';
+                                    })()}</p>
+                                    <div class="probability-bar" style="width: ${(() => {
+                                        if (!data.classification.after.probabilities) return 0;
+                                        const maxProb = Math.max(...Object.values(data.classification.after.probabilities));
+                                        return isNaN(maxProb) ? 0 : maxProb * 100;
+                                    })()}%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="change-visualization">
+                            <h3>Change Visualization</h3>
+                            <p>Red areas indicate detected environmental changes</p>
+                            <img src="data:image/png;base64,${data.change_mask}" alt="Change Detection Mask">
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <div class="error-message">
+                            Error: ${data.detail || 'Failed to process images'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <div class="error-message">
+                        Error: Failed to process images. Please try again.
+                    </div>
+                `;
+            } finally {
+                loading.style.display = 'none';
+                result.style.display = 'block';
+            }
+        });
+
+        setupImagePreview('before', 'beforePreview');
+        setupImagePreview('after', 'afterPreview');
+    </script>
+</body>
+</html> 

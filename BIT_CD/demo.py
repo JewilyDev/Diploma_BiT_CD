@@ -1,10 +1,19 @@
-from argparse import ArgumentParser
+import sys
+import os
 
+# Add necessary paths
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+# Specific site-packages for dependencies if needed
+sys.path.append(r"C:\Users\monch\AppData\Local\Programs\Python\Python313\Lib\site-packages")
+
+from argparse import ArgumentParser
+import traceback
 import utils
 import torch
 from models.basic_model import CDEvaluator
-
-import os
 
 """
 quick start
@@ -14,7 +23,6 @@ sample files in ./samples
 save prediction files in the ./samples/predict
 
 """
-
 
 def get_args():
     # ------------
@@ -42,17 +50,21 @@ def get_args():
     parser.add_argument('--checkpoint_name', default='best_ckpt.pt', type=str)
 
     args = parser.parse_args()
+    
+    # Set up the checkpoint directory
+    args.checkpoint_dir = os.path.join(args.checkpoint_root, "C:\\Users\\monch\\OneDrive\\Документы\\diploma_bit_cd\\Diploma_BiT_CD\\BIT_CD\\checkpoints\\BIT_LEVIR")
+    
     return args
 
 
 if __name__ == '__main__':
-
+   
     args = get_args()
     utils.get_device(args)
     device = torch.device("cuda:%s" % args.gpu_ids[0]
                           if torch.cuda.is_available() and len(args.gpu_ids)>0
                         else "cpu")
-    args.checkpoint_dir = os.path.join(args.checkpoint_root, args.project_name)
+    args.checkpoint_dir = os.path.join(args.checkpoint_root, "C:\\Users\\monch\\OneDrive\\Документы\\diploma_bit_cd\\Diploma_BiT_CD\\BIT_CD\\checkpoints\\BIT_LEVIR")
     os.makedirs(args.output_folder, exist_ok=True)
 
     log_path = os.path.join(args.output_folder, 'log_vis.txt')
@@ -70,10 +82,3 @@ if __name__ == '__main__':
         print('process: %s' % name)
         score_map = model._forward_pass(batch)
         model._save_predictions()
-
-
-
-
-
-
-

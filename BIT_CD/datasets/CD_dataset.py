@@ -28,7 +28,7 @@ IGNORE = 255
 label_suffix='.png' # jpg for gan dataset, others : png
 
 def load_img_name_list(dataset_path):
-    img_name_list = np.loadtxt(dataset_path, dtype=np.str)
+    img_name_list = np.loadtxt(dataset_path, dtype=str)
     if img_name_list.ndim == 2:
         return img_name_list[:, 0]
     return img_name_list
@@ -40,22 +40,22 @@ def load_image_label_list_from_npy(npy_path, img_name_list):
 
 
 def get_img_post_path(root_dir,img_name):
-    return os.path.join(root_dir, IMG_POST_FOLDER_NAME, img_name)
+    return os.path.join(root_dir, IMG_POST_FOLDER_NAME, img_name).replace("\\","/")
 
 
 def get_img_path(root_dir, img_name):
-    return os.path.join(root_dir, IMG_FOLDER_NAME, img_name)
+    return os.path.join(root_dir, IMG_FOLDER_NAME, img_name).replace("\\","/")
 
 
 def get_label_path(root_dir, img_name):
-    return os.path.join(root_dir, ANNOT_FOLDER_NAME, img_name.replace('.jpg', label_suffix))
+    return os.path.join(root_dir, ANNOT_FOLDER_NAME, img_name.replace('.jpg', label_suffix)).replace("\\","/")
 
 
 class ImageDataset(data.Dataset):
     """VOCdataloder"""
     def __init__(self, root_dir, split='train', img_size=256, is_train=True,to_tensor=True):
         super(ImageDataset, self).__init__()
-        self.root_dir = root_dir
+        self.root_dir = "C:\\Users\\monch\\OneDrive\\Документы\\diploma_bit_cd\\Diploma_BiT_CD\\BIT_CD\\samples"
         self.img_size = img_size
         self.split = split  # train | train_aug | val
         # self.list_path = self.root_dir + '/' + LIST_FOLDER_NAME + '/' + self.list + '.txt'
@@ -103,6 +103,7 @@ class CDDataset(ImageDataset):
 
     def __getitem__(self, index):
         name = self.img_name_list[index]
+        print(self.img_name_list)
         A_path = get_img_path(self.root_dir, self.img_name_list[index % self.A_size])
         B_path = get_img_post_path(self.root_dir, self.img_name_list[index % self.A_size])
         img = np.asarray(Image.open(A_path).convert('RGB'))

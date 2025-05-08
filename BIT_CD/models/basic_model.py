@@ -1,9 +1,11 @@
 import os
 
 import torch
+import sys
+sys.path.append(r"C:\Users\monch\OneDrive\Документы\diploma_bit_cd\Diploma_BiT_CD\BIT_CD")
 
 from misc.imutils import save_image
-from models.networks import *
+from BIT_CD.models.networks import *
 
 
 class CDEvaluator():
@@ -30,7 +32,8 @@ class CDEvaluator():
         if os.path.exists(os.path.join(self.checkpoint_dir, checkpoint_name)):
             # load the entire checkpoint
             checkpoint = torch.load(os.path.join(self.checkpoint_dir, checkpoint_name),
-                                    map_location=self.device)
+                                    map_location=self.device,
+                                    weights_only=False)
 
             self.net_G.load_state_dict(checkpoint['model_G_state_dict'])
             self.net_G.to(self.device)

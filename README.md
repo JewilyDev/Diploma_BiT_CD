@@ -1,7 +1,5 @@
 # Satellite Image Change Detection and Classification
 
-Test
-
 ## Overview
 This application provides a web interface and API for:
 - **Image Classification**: Classify single satellite images into 12 common land‐use categories using a ResNet-18 based model.

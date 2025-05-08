@@ -73,12 +73,22 @@ def de_norm(tensor_data):
 
 
 def get_device(args):
-    # set gpu ids
-    str_ids = args.gpu_ids.split(',')
-    args.gpu_ids = []
-    for str_id in str_ids:
-        id = int(str_id)
-        if id >= 0:
-            args.gpu_ids.append(id)
-    if len(args.gpu_ids) > 0:
-        torch.cuda.set_device(args.gpu_ids[0])
+    # Get device
+    if args.gpu_ids is not None and torch.cuda.is_available():
+        args.gpu_ids = [int(id) for id in args.gpu_ids.split(',')]
+        if len(args.gpu_ids) > 0:
+            # Set CUDA device only if it's available
+            try:
+                # For newer PyTorch versions
+                torch.cuda.set_device(args.gpu_ids[0])
+            except AttributeError:
+                # For older PyTorch versions or if set_device is not available
+                pass
+            print('Using CUDA device: {}'.format(args.gpu_ids[0]))
+        else:
+            print('Using CPU mode')
+            args.gpu_ids = []
+    else:
+        print('Using CPU mode')
+        args.gpu_ids = []
+    return args

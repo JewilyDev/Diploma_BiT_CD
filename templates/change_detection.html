@@ -3,6 +3,7 @@
 <head>
     <title>Satellite Change Detection - Environmental Impact Analysis</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         :root {
             --primary-color: #2C5530;
@@ -111,9 +112,10 @@
         }
 
         .upload-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
+            width: 100%;
         }
 
         .image-upload {
@@ -124,6 +126,7 @@
             padding: 1.5rem;
             border-radius: 8px;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .image-upload:hover {
@@ -160,18 +163,149 @@
         .preview-section {
             margin-top: 1rem;
             text-align: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
 
-        .preview-image {
-            max-width: 100%;
-            max-height: 300px;
+        .preview-item {
+            background-color: var(--background-color);
+            padding: 1rem;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
 
-        .preview-image:hover {
-            transform: scale(1.02);
+        .preview-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .preview-item p {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-item h4 {
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+            text-align: center;
+        }
+
+        .summary-visualization {
+            margin-top: 3rem;
+            text-align: center;
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .download-section {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-button i {
+            font-size: 1.2rem;
+        }
+
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .statistics-card {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .statistics-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .statistics-card h4 {
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .statistics-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0.5rem 0;
+        }
+
+        .statistics-label {
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 1s ease;
+        }
+
+        .help-text {
+            margin-top: 0.5rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 0.9rem;
         }
 
         .submit-button {
@@ -185,7 +319,7 @@
             transition: all 0.3s ease;
             grid-column: 1 / -1;
             justify-self: center;
-            margin-top: 1rem;
+            margin-top: 2rem;
             font-size: 1.1rem;
         }
 
@@ -411,6 +545,128 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        .timeline-controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .timeline-controls button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-controls button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .timeline-controls button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .image-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .image-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: var(--background-color);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateX(5px);
+        }
+
+        .image-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .image-item .image-info {
+            flex-grow: 1;
+        }
+
+        .image-item .image-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .image-item button {
+            background: none;
+            border: none;
+            color: var(--error-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .image-item button:hover {
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--accent-color);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(138, 168, 136, 0.1);
+        }
+
+        .drop-zone.dragover {
+            border-color: var(--primary-color);
+            background-color: rgba(138, 168, 136, 0.2);
+            transform: scale(1.02);
+        }
+
+        .drop-zone i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .drop-zone p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+
+        .drop-zone .file-input {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -431,24 +687,28 @@
         <div class="upload-section">
             <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
                 <div class="image-upload">
-                    <h3>Before Image</h3>
-                    <div class="file-input-container">
-                        <input type="file" id="before" name="before" accept="image/*" class="file-input" required>
+                    <h3>Timeline Images</h3>
+                    <div class="drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag and drop images here or click to select</p>
+                        <input type="file" id="images" name="files" accept="image/*" multiple class="file-input">
                     </div>
-                    <div class="preview-section">
-                        <img id="beforePreview" class="preview-image" style="display: none;">
+                    <div class="image-list" id="imageList">
+                        <!-- Images will be added here dynamically -->
+                    </div>
+                    <div class="timeline-controls">
+                        <button type="button" id="moveUpBtn" disabled>
+                            <i class="fas fa-arrow-up"></i> Move Up
+                        </button>
+                        <button type="button" id="moveDownBtn" disabled>
+                            <i class="fas fa-arrow-down"></i> Move Down
+                        </button>
+                        <button type="button" id="removeBtn" disabled>
+                            <i class="fas fa-trash"></i> Remove Selected
+                        </button>
                     </div>
                 </div>
-                <div class="image-upload">
-                    <h3>After Image</h3>
-                    <div class="file-input-container">
-                        <input type="file" id="after" name="after" accept="image/*" class="file-input" required>
-                    </div>
-                    <div class="preview-section">
-                        <img id="afterPreview" class="preview-image" style="display: none;">
-                    </div>
-                </div>
-                <button type="submit" class="submit-button">Detect Changes</button>
+                <button type="submit" class="submit-button" disabled>Analyze Timeline Changes</button>
             </form>
         </div>
 
@@ -457,37 +717,164 @@
     </div>
 
     <script>
-        function setupImagePreview(inputId, previewId) {
-            const input = document.getElementById(inputId);
-            const preview = document.getElementById(previewId);
-            
-            input.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.style.display = 'block';
+        class ImageManager {
+            constructor() {
+                this.images = [];
+                this.selectedIndex = -1;
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                const dropZone = document.getElementById('dropZone');
+                const fileInput = document.getElementById('images');
+                const imageList = document.getElementById('imageList');
+                const moveUpBtn = document.getElementById('moveUpBtn');
+                const moveDownBtn = document.getElementById('moveDownBtn');
+                const removeBtn = document.getElementById('removeBtn');
+                const submitBtn = document.querySelector('.submit-button');
+
+                // Drag and drop handlers
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.add('dragover');
+                });
+
+                dropZone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.remove('dragover');
+                });
+
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.remove('dragover');
+                    const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+                    this.addImages(files);
+                });
+
+                dropZone.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    const files = Array.from(e.target.files);
+                    this.addImages(files);
+                });
+
+                // Control buttons
+                moveUpBtn.addEventListener('click', () => this.moveSelected(-1));
+                moveDownBtn.addEventListener('click', () => this.moveSelected(1));
+                removeBtn.addEventListener('click', () => this.removeSelected());
+
+                // Image list click handler
+                imageList.addEventListener('click', (e) => {
+                    const imageItem = e.target.closest('.image-item');
+                    if (imageItem) {
+                        const index = parseInt(imageItem.dataset.index);
+                        this.selectImage(index);
                     }
+                });
+            }
+
+            addImages(files) {
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.images.push({
+                            file: file,
+                            preview: e.target.result
+                        });
+                        this.updateImageList();
+                        this.updateSubmitButton();
+                    };
                     reader.readAsDataURL(file);
+                });
+            }
+
+            selectImage(index) {
+                this.selectedIndex = index;
+                this.updateImageList();
+                this.updateControlButtons();
+            }
+
+            moveSelected(direction) {
+                if (this.selectedIndex === -1) return;
+                
+                const newIndex = this.selectedIndex + direction;
+                if (newIndex >= 0 && newIndex < this.images.length) {
+                    const temp = this.images[this.selectedIndex];
+                    this.images[this.selectedIndex] = this.images[newIndex];
+                    this.images[newIndex] = temp;
+                    this.selectedIndex = newIndex;
+                    this.updateImageList();
                 }
-            });
+            }
+
+            removeSelected() {
+                if (this.selectedIndex === -1) return;
+                
+                this.images.splice(this.selectedIndex, 1);
+                this.selectedIndex = -1;
+                this.updateImageList();
+                this.updateControlButtons();
+                this.updateSubmitButton();
+            }
+
+            updateImageList() {
+                const imageList = document.getElementById('imageList');
+                imageList.innerHTML = this.images.map((image, index) => `
+                    <div class="image-item ${index === this.selectedIndex ? 'selected' : ''}" data-index="${index}">
+                        <img src="${image.preview}" alt="Image ${index + 1}">
+                        <div class="image-info">
+                            <p>Image ${index + 1}</p>
+                            <small>${image.file.name}</small>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateControlButtons() {
+                const moveUpBtn = document.getElementById('moveUpBtn');
+                const moveDownBtn = document.getElementById('moveDownBtn');
+                const removeBtn = document.getElementById('removeBtn');
+
+                moveUpBtn.disabled = this.selectedIndex <= 0;
+                moveDownBtn.disabled = this.selectedIndex === -1 || this.selectedIndex >= this.images.length - 1;
+                removeBtn.disabled = this.selectedIndex === -1;
+            }
+
+            updateSubmitButton() {
+                const submitBtn = document.querySelector('.submit-button');
+                submitBtn.disabled = this.images.length < 2;
+            }
+
+            getFormData() {
+                const formData = new FormData();
+                
+                // Debugging information
+                console.log(`Preparing form data with ${this.images.length} images`);
+                
+                // Add all images to the files array
+                this.images.forEach((image, index) => {
+                    console.log(`Adding file ${index}: ${image.file.name} (${image.file.size} bytes)`);
+                    formData.append('files', image.file);
+                });
+                
+                return formData;
+            }
         }
+
+        const imageManager = new ImageManager();
 
         document.getElementById('uploadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const formData = new FormData();
-            const beforeInput = document.getElementById('before');
-            const afterInput = document.getElementById('after');
-            
-            if (!beforeInput.files[0] || !afterInput.files[0]) {
-                alert('Please select both before and after images');
+            if (imageManager.images.length < 2) {
+                alert('Please select at least two images');
                 return;
             }
-            
-            formData.append('before', beforeInput.files[0]);
-            formData.append('after', afterInput.files[0]);
             
             const loading = document.getElementById('loading');
             const result = document.getElementById('result');
@@ -496,105 +883,126 @@
             result.style.display = 'none';
             
             try {
-                const response = await fetch('/detect-change', {
+                console.log("Submitting form with images:", imageManager.images.length);
+                
+                const formData = imageManager.getFormData();
+                console.log("Form data prepared, sending request...");
+                
+                // Log what's being sent for debugging purposes
+                for (const [key, value] of formData.entries()) {
+                    console.log(`${key}: ${value instanceof File ? value.name : value}`);
+                }
+                
+                const response = await fetch('/detect-timeline-changes', {
                     method: 'POST',
                     body: formData
                 });
                 
-                const data = await response.json();
+                console.log("Response received:", response.status, response.statusText);
                 
-                if (response.ok) {
-                    result.innerHTML = `
-                        <h2>Change Detection Results</h2>
-                        <div class="impact-statement">
-                            Detected ${data.change_percentage.toFixed(2)}% change in the environment
-                        </div>
-                        <div class="change-stats">
-                            <div class="stat-item">
-                                <h4>${data.change_percentage.toFixed(2)}%</h4>
-                                <p>Change Detected</p>
-                            </div>
-                            <div class="stat-item">
-                                <h4>${data.change_stats.changed_pixels.toLocaleString()}</h4>
-                                <p>Changed Pixels</p>
-                            </div>
-                            <div class="stat-item">
-                                <h4>${data.change_stats.total_pixels.toLocaleString()}</h4>
-                                <p>Total Pixels</p>
-                            </div>
-                        </div>
-
-                        <div class="threshold-analysis">
-                            <h3>Threshold Analysis</h3>
-                            <table class="threshold-table">
-                                <thead>
-                                    <tr>
-                                        <th>Threshold</th>
-                                        <th>Change Percentage</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${Object.entries(data.threshold_results).map(([threshold, percentage]) => `
-                                        <tr>
-                                            <td>${threshold.replace('threshold_', '')}</td>
-                                            <td>${percentage.toFixed(2)}%</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="classification-results">
-                            <h3>Classification Results</h3>
-                            <div class="classification-grid">
-                                <div class="classification-card">
-                                    <h4>Before Classification</h4>
-                                    <p>Class: ${data.classification.before.predicted === undefined || data.classification.before.predicted === 'No significant change' ? 'No significant change detected' : data.classification.before.predicted}</p>
-                                    <p>Confidence: ${(() => {
-                                        if (!data.classification.before.probabilities) return 'N/A';
-                                        const maxProb = Math.max(...Object.values(data.classification.before.probabilities));
-                                        return isNaN(maxProb) || maxProb === 0 ? 'N/A' : (maxProb * 100).toFixed(2) + '%';
-                                    })()}</p>
-                                    <div class="probability-bar" style="width: ${(() => {
-                                        if (!data.classification.before.probabilities) return 0;
-                                        const maxProb = Math.max(...Object.values(data.classification.before.probabilities));
-                                        return isNaN(maxProb) ? 0 : maxProb * 100;
-                                    })()}%"></div>
-                                </div>
-                                <div class="classification-card">
-                                    <h4>After Classification</h4>
-                                    <p>Class: ${data.classification.after.predicted === undefined || data.classification.after.predicted === 'No significant change' ? 'No significant change detected' : data.classification.after.predicted}</p>
-                                    <p>Confidence: ${(() => {
-                                        if (!data.classification.after.probabilities) return 'N/A';
-                                        const maxProb = Math.max(...Object.values(data.classification.after.probabilities));
-                                        return isNaN(maxProb) || maxProb === 0 ? 'N/A' : (maxProb * 100).toFixed(2) + '%';
-                                    })()}</p>
-                                    <div class="probability-bar" style="width: ${(() => {
-                                        if (!data.classification.after.probabilities) return 0;
-                                        const maxProb = Math.max(...Object.values(data.classification.after.probabilities));
-                                        return isNaN(maxProb) ? 0 : maxProb * 100;
-                                    })()}%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="change-visualization">
-                            <h3>Change Visualization</h3>
-                            <p>Red areas indicate detected environmental changes</p>
-                            <img src="data:image/png;base64,${data.change_mask}" alt="Change Detection Mask">
-                        </div>
-                    `;
-                } else {
-                    result.innerHTML = `
-                        <div class="error-message">
-                            Error: ${data.detail || 'Failed to process images'}
-                        </div>
-                    `;
+                if (!response.ok) {
+                    let errorData;
+                    const errorText = await response.text();
+                    console.error("Error response text:", errorText);
+                    
+                    try {
+                        errorData = JSON.parse(errorText);
+                        console.error("Parsed error data:", errorData);
+                        throw new Error(errorData.detail || `Server error: ${response.status} ${response.statusText}`);
+                    } catch (parseError) {
+                        console.error("Error parsing error response:", parseError);
+                        throw new Error(`Server error (${response.status}): ${errorText || response.statusText}`);
+                    }
                 }
+                
+                const data = await response.json();
+                console.log("Parsed response data:", Object.keys(data));
+                
+                // Calculate overall statistics
+                const totalChange = data.comparisons.reduce((sum, comp) => sum + comp.change_percentage, 0);
+                const avgChange = totalChange / data.comparisons.length;
+                const maxChange = Math.max(...data.comparisons.map(comp => comp.change_percentage));
+                const minChange = Math.min(...data.comparisons.map(comp => comp.change_percentage));
+                
+                result.innerHTML = `
+                    <h2>Timeline Change Analysis</h2>
+                    <div class="impact-statement">
+                        Analyzed ${data.total_images} images across ${data.total_comparisons} time periods
+                    </div>
+                    
+                    <div class="statistics-grid">
+                        <div class="statistics-card">
+                            <h4>Overall Statistics</h4>
+                            <div class="statistics-value">${avgChange.toFixed(2)}%</div>
+                            <div class="statistics-label">Average Change</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(avgChange/100) * 100}%"></div>
+                            </div>
+                        </div>
+                        <div class="statistics-card">
+                            <h4>Maximum Change</h4>
+                            <div class="statistics-value">${maxChange.toFixed(2)}%</div>
+                            <div class="statistics-label">Highest Change Detected</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(maxChange/100) * 100}%"></div>
+                            </div>
+                        </div>
+                        <div class="statistics-card">
+                            <h4>Minimum Change</h4>
+                            <div class="statistics-value">${minChange.toFixed(2)}%</div>
+                            <div class="statistics-label">Lowest Change Detected</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(minChange/100) * 100}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-visualization">
+                        <h3>Change Timeline</h3>
+                        <div class="timeline-grid">
+                            ${data.comparisons.map((comp, idx) => `
+                                <div class="timeline-item">
+                                    <h4>Period ${idx + 1}</h4>
+                                    <div class="change-stats">
+                                        <div class="stat-item">
+                                            <h4>${comp.change_percentage.toFixed(2)}%</h4>
+                                            <p>Change Detected</p>
+                                        </div>
+                                    </div>
+                                    <div class="change-visualization">
+                                        <img src="data:image/png;base64,${comp.change_mask}" alt="Change Detection Mask">
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="summary-visualization">
+                        <h3>Summary of All Changes</h3>
+                        <img src="data:image/png;base64,${data.summary_mask}" alt="Summary Change Detection Mask">
+                    </div>
+
+                    <div class="download-section">
+                        <button class="download-button" onclick="downloadBase64Image('${data.summary_mask}', 'summary_changes.png')">
+                            <i class="fas fa-download"></i> Download Summary Image
+                        </button>
+                        <button class="download-button" id="downloadDataBtn">
+                            <i class="fas fa-download"></i> Download Analysis Data
+                        </button>
+                    </div>
+                `;
+                
+                // Attach event listener to the download button
+                document.getElementById('downloadDataBtn').addEventListener('click', () => {
+                    downloadJSON(data, 'change_analysis.json');
+                });
+                
             } catch (error) {
+                console.error("Error during form submission:", error);
                 result.innerHTML = `
                     <div class="error-message">
-                        Error: Failed to process images. Please try again.
+                        <h3>Error</h3>
+                        <p>${error.message}</p>
                     </div>
                 `;
             } finally {
@@ -603,8 +1011,38 @@
             }
         });
 
-        setupImagePreview('before', 'beforePreview');
-        setupImagePreview('after', 'afterPreview');
+        function downloadBase64Image(base64String, filename) {
+            const link = document.createElement('a');
+            link.href = `data:image/png;base64,${base64String}`;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function downloadJSON(data, filename) {
+            // Convert data to a properly formatted JSON string
+            const jsonString = JSON.stringify(data, null, 2);
+            
+            // Create a Blob with the JSON data
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            
+            // Create a URL for the Blob
+            const url = URL.createObjectURL(blob);
+            
+            // Create a link element to trigger the download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            
+            // Append link to body, click it, and then remove it
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up the URL object
+            URL.revokeObjectURL(url);
+        }
     </script>
 </body>
 </html> 

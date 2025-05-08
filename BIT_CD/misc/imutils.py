@@ -4,7 +4,7 @@ import cv2
 from PIL import Image
 from PIL import ImageFilter
 import PIL
-import tifffile
+import tifffile  
 
 
 def cv_rotate(image, angle, borderValue):

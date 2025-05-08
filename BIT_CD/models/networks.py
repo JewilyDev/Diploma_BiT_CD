@@ -7,8 +7,8 @@ from torch.optim import lr_scheduler
 import functools
 from einops import rearrange
 
-import BIT_CD.models as models
-from BIT_CD.models.help_funcs import Transformer, TransformerDecoder, TwoLayerConv2d
+from . import resnet as models
+from .help_funcs import Transformer, TransformerDecoder, TwoLayerConv2d
 
 
 ###############################################################################
